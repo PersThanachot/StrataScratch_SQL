@@ -10,3 +10,17 @@ LEFT JOIN db_dept b
 ON a.department_id = b.id
 WHERE b.department in ('marketing','engineering')
 ORDER BY a.salary DESC
+
+------------------------------------------------------------
+
+SELECT
+  (SELECT max(salary)
+   FROM db_employee a
+   JOIN db_dept b 
+   ON a.department_id = b.id
+   WHERE department = 'marketing') -
+  (SELECT max(salary)
+   FROM db_employee a
+   JOIN db_dept b 
+   ON a.department_id = b.id
+   WHERE department = 'engineering') AS salary_difference
