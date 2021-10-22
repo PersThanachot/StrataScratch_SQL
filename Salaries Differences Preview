@@ -1,0 +1,12 @@
+SELECT 
+    a.id,
+    a.first_name,
+    a.last_name,
+    a.salary,
+    a.department_id,
+    b.department
+FROM db_employee a
+LEFT JOIN db_dept b
+ON a.department_id = b.id
+WHERE b.department in ('marketing','engineering')
+ORDER BY a.salary DESC
