@@ -1,0 +1,9 @@
+SELECT 
+    city,
+    property_type,
+    avg(bathrooms) AS avg_bathrooms,
+    avg(bedrooms) AS avg_bedroom
+FROM airbnb_search_details
+GROUP BY 
+    city,
+    property_type;
