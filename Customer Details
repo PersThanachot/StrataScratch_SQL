@@ -1,0 +1,10 @@
+SELECT 
+    a.first_name,
+    a.last_name,
+    a.city,
+    b.order_details
+FROM customers a
+LEFT JOIN orders b
+ON a.id = b.cust_id
+ORDER BY a.first_name,
+         b.order_details ASC;
