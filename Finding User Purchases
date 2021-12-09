@@ -1,0 +1,16 @@
+
+Write a query that'll identify returning active users. A returning active user is a user that 
+has made a second purchase within 7 days of any other of their purchases. Output a list 
+of user_ids of these returning active users.
+
+--------------------------------------------------------------------------------------------------
+
+SELECT
+    a.user_id
+FROM amazon_transactions a
+JOIN amazon_transactions b 
+ON a.user_id = b.user_id
+WHERE a.id <> b.id AND
+      b.created_at::date-a.created_at::date BETWEEN 0 AND 7
+GROUP BY a.user_id
+ORDER BY a.user_id ASC;
