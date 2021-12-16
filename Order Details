@@ -1,0 +1,19 @@
+
+Find order details made by Jill and Eva.
+Consider the Jill and Eva as first names of customers.
+Output the order date, details and cost along with the first name.
+Order records based on the customer id in ascending order.
+
+-------
+
+SELECT 
+    b.cust_id,
+    a.first_name,
+    b.order_date,
+    b.order_details,
+    b.total_order_cost
+FROM customers a
+LEFT JOIN orders b
+ON a.id = b.cust_id
+WHERE first_name IN ('Jill','Eva')
+ORDER BY b.cust_id ASC;
