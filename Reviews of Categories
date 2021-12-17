@@ -1,0 +1,18 @@
+
+Find the top business categories based on the total number of reviews. Output the 
+category along with the total number of reviews. Order by total reviews in descending 
+order.
+
+-------------------------------------------------------------------------------------------
+
+WITH split_category AS
+    (SELECT 
+        unnest(string_to_array(categories, ';')) AS category,
+        review_count
+    FROM yelp_business)
+SELECT 
+    category,
+    sum(review_count) AS total_review
+FROM split_category
+GROUP BY category
+ORDER BY total_review DESC;
