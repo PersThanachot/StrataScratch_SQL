@@ -1,0 +1,23 @@
+
+Find the employee with the highest salary per department.
+Output the department name, employee's first name along with the corresponding salary.
+
+-----------------------------------------------
+
+WITH Highest_salary AS
+    (SELECT 
+        department,
+        max(salary) AS highest_salary
+    FROM employee
+    GROUP BY department)
+SELECT 
+    a.department,
+    a.first_name,
+    a.salary
+FROM employee a
+LEFT JOIN Highest_salary b
+ON a.department = b.department AND
+   a.salary = b.highest_salary
+WHERE a.department = b.department AND
+      a.salary = b.highest_salary
+ORDER BY a.salary DESC;
