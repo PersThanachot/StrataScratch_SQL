@@ -1,0 +1,15 @@
+
+Find the titles of workers that earn the highest salary. Output the highest-paid title or 
+multiple titles that share the highest salary.
+
+----------------------------------------------------------------------------------------------
+
+SELECT 
+    b.worker_title
+FROM worker a
+LEFT JOIN title b
+ON a.worker_id = b.worker_ref_id
+WHERE a.salary = 
+    (SELECT 
+        max(salary)
+     FROM worker)
