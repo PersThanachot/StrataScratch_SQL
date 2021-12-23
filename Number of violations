@@ -1,0 +1,15 @@
+
+You're given a dataset of health inspections. Count the number of violation in an 
+inspection in 'Roxanne Cafe' for each year. If an inspection resulted in a violation, there 
+will be a value in the 'violation_id' column. Output the number of violations by year in 
+ascending order.
+
+------------------------------------------------------------------------------------------------
+
+SELECT 
+    EXTRACT(YEAR FROM inspection_date :: DATE) AS YEAR,
+    count(violation_id) AS total_inspection
+FROM sf_restaurant_health_violations
+WHERE business_name = 'Roxanne Cafe'
+GROUP BY Year
+ORDER BY Year ASC;
