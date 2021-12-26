@@ -1,0 +1,30 @@
+
+Given a table of purchases by date, calculate the month-over-month percentage change 
+in revenue. The output should include the year-month date (YYYY-MM) and percentage 
+change, rounded to the 2nd decimal point, and sorted from the beginning of the year to 
+the end of the year.
+The percentage change column will be populated from the 2nd month forward and can 
+be calculated as 
+((this month's revenue - last month's revenue) / last month's revenue)*100.
+
+-----------------------------------------------------------------------------------------
+
+WITH total_of_year_month AS
+(SELECT 
+    TO_CHAR(created_at :: DATE , 'YYYY-MM' ) AS year_month,
+    sum(value) AS sum_value
+FROM sf_transactions
+GROUP BY year_month
+ORDER BY year_month),
+      add_sum_value_last_month AS
+(SELECT 
+    year_month,
+    sum_value,
+    LAG(sum_value,1) OVER (order by year_month ASC) AS sum_value_last_month
+FROM total_of_year_month)
+
+SELECT 
+    year_month,
+    ROUND((sum_value - sum_value_last_month)*100/sum_value_last_month,2) 
+      AS Monthly_Percentage_Difference
+FROM add_sum_value_last_month
