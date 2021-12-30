@@ -14,12 +14,12 @@ WITH New_table AS
     (SELECT
         user_id,
         min(created_at) OVER(PARTITION BY user_id) min_date,
-        min(product_id) OVER(PARTITION BY user_id) product_id_first,
-        min(created_at) OVER(PARTITION BY user_id, product_id) min_product_date,
+        min(product_id) OVER(PARTITION BY user_id) first_product_id,
+        min(created_at) OVER(PARTITION BY user_id, product_id) new_product_date,
         min(product_id) OVER(PARTITION BY user_id, product_id) new_product
      FROM marketing_campaign)
 SELECT 
     -- *
     count(DISTINCT user_id)
 FROM New_table
-WHERE min_date <> min_product_date
+WHERE min_date <> new_product_date
