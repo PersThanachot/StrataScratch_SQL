@@ -1,0 +1,25 @@
+WITH New_table AS
+    (SELECT
+        a.user_id,
+        a.created_at AS min_date,
+        a.product_id AS product_id_first,
+        b.created_at AS product_date,
+        b.product_id
+    FROM marketing_campaign a
+    INNER JOIN marketing_campaign b
+    ON a.user_id = b.user_id
+    WHERE (a.user_id,a.created_at) IN 
+            (SELECT 
+                user_id,
+                min(created_at) 
+             FROM marketing_campaign 
+             group by user_id))
+             
+SELECT count(DISTINCT user_id)
+FROM New_table
+WHERE min_date <> product_date AND 
+      user_id NOT IN
+        (SELECT user_id
+         FROM New_table
+         WHERE min_date <> product_date AND 
+               product_id_first = product_id)
