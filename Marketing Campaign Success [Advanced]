@@ -1,0 +1,25 @@
+
+You have a table of in-app purchases by user. Users that make their first in-app purchase 
+are placed in a marketing campaign where they see call-to-actions for more in-app 
+purchases. Find the number of users that made additional in-app purchases due to the 
+success of the marketing campaign.
+
+The marketing campaign doesn't start until one day after the initial in-app purchase so 
+users that make multiple purchases on the same day do not count, nor do we count 
+users that make only the same purchases over time.
+
+-------------------------------------------------------------------------------------------
+
+WITH New_table AS 
+    (SELECT
+        user_id,
+        min(created_at) OVER(PARTITION BY user_id) min_date,
+        min(product_id) OVER(PARTITION BY user_id) product_id_first,
+        min(created_at) OVER(PARTITION BY user_id, product_id) min_product_date,
+        min(product_id) OVER(PARTITION BY user_id, product_id) product_id_after
+     FROM marketing_campaign)
+SELECT 
+    -- *
+    count(DISTINCT user_id)
+FROM New_table
+WHERE min_date <> min_product_date
