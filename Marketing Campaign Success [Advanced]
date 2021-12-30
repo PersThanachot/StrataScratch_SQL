@@ -22,4 +22,4 @@ SELECT
     -- *
     count(DISTINCT user_id)
 FROM New_table
-WHERE min_date <> new_product_date
+WHERE min_date <> new_product_date -- Not choose same products as first day
