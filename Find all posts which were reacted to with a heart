@@ -1,0 +1,11 @@
+
+Find all posts which were reacted to with a heart.
+
+---------------------------------------------------
+
+SELECT 
+    DISTINCT b.*
+FROM facebook_reactions a
+INNER JOIN facebook_posts b
+ON a.post_id = b.post_id
+WHERE a.reaction = 'heart';
