@@ -1,0 +1,14 @@
+
+Find all wineries which produce wines by possessing aromas of plum, cherry, rose, or 
+hazelnut.
+Output unique winery values only.
+
+--------------------------------------------------------------------------------------
+
+SELECT DISTINCT winery
+FROM winemag_p1
+WHERE 
+    description ILIKE '%plum%' OR
+    description ILIKE '%cherry%' OR
+    description ILIKE '%rose%' OR
+    description ILIKE '%hazelnut%' 
