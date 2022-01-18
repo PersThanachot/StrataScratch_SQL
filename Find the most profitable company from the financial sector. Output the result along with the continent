@@ -1,0 +1,34 @@
+
+Find the most profitable company from the financial sector. Output the result along with 
+the continent.
+
+--------------------------------------------------------------------------------------------
+
+WITH New_table AS
+(
+    SELECT 
+        max(profits) AS max_profits,
+        sector
+    FROM forbes_global_2010_2014
+    WHERE sector = 'Financials'
+    GROUP BY sector
+)
+
+SELECT 
+    company,
+    continent
+FROM forbes_global_2010_2014 a
+LEFT JOIN New_table b
+ON a.profits = b.max_profits
+WHERE a.sector = 'Financials' AND
+      a.profits = b.max_profits
+
+But easy way----------------------------
+
+SELECT 
+    company,
+    continent
+FROM forbes_global_2010_2014
+WHERE sector = 'Financials'
+ORDER BY profits DESC
+LIMIT 1
