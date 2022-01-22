@@ -1,0 +1,21 @@
+
+Find the rate of processed tickets for each type.
+
+--------------------------------------------------------------
+
+WITH New_table AS
+(
+SELECT 
+    *,
+    CASE 
+        WHEN processed = 'TRUE' THEN 1 
+        ELSE 0
+    END AS processed_1
+FROM facebook_complaints
+)
+
+SELECT 
+    type,
+    sum(processed_1) :: NUMERIC/count(*) AS rate_processed
+FROM New_table
+GROUP BY type
